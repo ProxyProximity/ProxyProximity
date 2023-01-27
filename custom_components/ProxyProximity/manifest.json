@@ -1,0 +1,11 @@
+{
+    "domain": "ProxyProximity",
+    "name": "ProxyProximity",
+    "integration_type": "hub",
+    "documentation": "https://proxyproximity.com",
+    "version": "0.1.0",
+    "dependencies": ["bluetooth_adapters"],
+    "codeowners": ["@danps1"],
+    "requirements": [],
+    "iot_class": "local_push"
+  }
