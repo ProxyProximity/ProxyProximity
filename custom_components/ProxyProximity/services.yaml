@@ -1,0 +1,26 @@
+# File: custom_components/proxyproximity/services.yaml
+# Define the services exposed by the component
+# https://developers.home-assistant.io/docs/integration_services_basic
+
+# Service to trigger a rescan of the device list
+rescan_devices:
+  description: Triggers a rescan of the device list
+  fields:
+    device_id:
+      description: ID of the device to rescan. If omitted, all devices will be rescanned.
+      example: 1234
+    device_mac:
+      description: MAC address of the device to rescan. If omitted, all devices will be rescanned.
+      example: 'AA:BB:CC:DD:EE:FF'
+
+# Service to trigger a rescan of the known devices list
+rescan_known_devices:
+  description: Triggers a rescan of the known devices list
+
+# Service to set the `default_tx_power` value in the configuration
+set_default_tx_power:
+  description: Sets the `default_tx_power` value in the configuration
+  fields:
+    tx_power:
+      description: Value to set the default `tx_power` to
+      example: 0
