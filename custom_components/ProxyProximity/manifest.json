@@ -1,14 +1,17 @@
 {
-    "domain": "ProxyProximity",
-    "name": "ProxyProximity",
-    "integration_type": "hub",
-    "documentation": "https://proxyproximity.com",
-    "version": "0.0.5",
-    "dependencies": ["bluetooth_adapters"],
-     "bluetooth": [{ 
-        "connectable": false
-        }],
-    "codeowners": ["@danps1"],
-    "requirements": [],
-    "iot_class": "local_push"
+  "domain": "ProxyProximity",
+  "name": "ProxyProximity Tracker",
+  "bluetooth": [
+    {
+      "manufacturer_id": 76,
+      "manufacturer_data_start": [2, 21]
+    }
+  ],
+  "codeowners": ["@danps1"],
+  "config_flow": true,
+  "dependencies": ["bluetooth_adapters"],
+  "documentation": "https://www.home-assistant.io/integrations/ProxyProximity",
+  "iot_class": "local_push",
+  "loggers": ["bleak"],
+  "requirements": ["ProxyProximity-ble==1.0.1"]
 }

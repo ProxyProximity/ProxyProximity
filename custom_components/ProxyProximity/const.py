@@ -1,34 +1,48 @@
-"""Constants for the ProxyProximity integration."""
+"""Constants for the ProxyProximity Tracker integration."""
 
-# Base component constants
-DOMAIN = "proximity"
+from datetime import timedelta
 
-# Attributes
-ATTR_DISTANCE = "distance"
+from homeassistant.components.bluetooth import (
+    FALLBACK_MAXIMUM_STALE_ADVERTISEMENT_SECONDS,
+)
+from homeassistant.const import Platform
 
-# Services
-SERVICE_CALIBRATE = "calibrate"
+DOMAIN = "ProxyProximity"
 
-# Configuration
-CONF_DEVICE_TRACKER = "device_tracker"
-CONF_ENTITY_SUFFIX = "entity_suffix"
-CONF_SHOW_AS_STATE = "show_as_state"
-CONF_SHOW_LAST_CHANGED = "show_last_changed"
-CONF_ROUND_DIGITS = "round_digits"
-CONF_DEFAULT_TX_POWER = "default_tx_power"
+PLATFORMS = [Platform.DEVICE_TRACKER, Platform.SENSOR]
 
-# Defaults
-DEFAULT_NAME = DOMAIN
-DEFAULT_DEVICE_TRACKER = "device_tracker"
-DEFAULT_ENTITY_SUFFIX = "prox"
-DEFAULT_SHOW_AS_STATE = False
-DEFAULT_SHOW_LAST_CHANGED = False
-DEFAULT_ROUND_DIGITS = 2
-DEFAULT_DEFAULT_TX_POWER = -59
+SIGNAL_ProxyProximity_DEVICE_NEW = "ProxyProximity_tracker_new_device"
+SIGNAL_ProxyProximity_DEVICE_UNAVAILABLE = "ProxyProximity_tracker_unavailable_device"
+SIGNAL_ProxyProximity_DEVICE_SEEN = "ProxyProximity_seen_device"
 
-# Platforms
-PLATFORMS = [DEVICE_TRACKER_DOMAIN]
+ATTR_UUID = "uuid"
+ATTR_MAJOR = "major"
+ATTR_MINOR = "minor"
+ATTR_SOURCE = "source"
 
-# Messages
-MESSAGE_DEVICE_CONNECTED = "{} connected to {} network."
-MESSAGE_DEVICE_DISCONNECTED = "{} disconnected from {} network."
+UNAVAILABLE_TIMEOUT = 180  # Number of seconds we wait for a beacon to be seen before marking it unavailable
+
+# How often to update RSSI if it has changed
+# and look for unavailable groups that use a random MAC address
+UPDATE_INTERVAL = timedelta(seconds=60)
+
+# If a device broadcasts this many unique ids from the same address
+# we will add it to the ignore list since its garbage data.
+MAX_IDS = 10
+
+# If a device broadcasts this many major minors for the same uuid
+# we will add it to the ignore list since its garbage data.
+MAX_IDS_PER_UUID = 50
+
+# Number of times a beacon must be seen before it is added to the system
+# This is to prevent devices that are just passing by from being added
+# to the system.
+MIN_SEEN_TRANSIENT_NEW = (
+    round(
+        FALLBACK_MAXIMUM_STALE_ADVERTISEMENT_SECONDS / UPDATE_INTERVAL.total_seconds()
+    )
+    + 1
+)
+
+CONF_IGNORE_ADDRESSES = "ignore_addresses"
+CONF_IGNORE_UUIDS = "ignore_uuids"
